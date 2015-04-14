@@ -53,4 +53,7 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
-/data
+# External libraries, geojson files and jekyll thing
+data/*
+_site/*
+leaflet*
