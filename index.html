@@ -35,14 +35,14 @@
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="http://d3js.org/topojson.v1.min.js"></script>
     <script>
-
+    (function() {
       var width = 960,
           height = 1160;
 
       var svg = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height);
-
+      /*
       d3.json("uk.json", function(error, uk) {
         if (error) {
           return console.error(error);
@@ -104,8 +104,31 @@
             .text(function(d) { return d.properties.name; });
 
 
-      });
+      });*/
 
+      d3.json("constits_topo.json", function(error, constits) {
+        if (error) {
+          return console.error(error);
+        }
+        var subunits = topojson.feature(constits, constits.objects.combined);
+
+        var projection = d3.geo.albers()
+          .center([0, 55.4])
+          .rotate([4.4, 0])
+          .parallels([50, 60])
+          .scale(6000)
+          .translate([width / 2, height / 2]);
+
+        var path = d3.geo.path()
+          .projection(projection)
+          .pointRadius(2);
+
+        svg.append("path")
+          .datum(subunits)
+          .attr("d", path);
+
+      });
+    })();
 
     </script>
   </body>
