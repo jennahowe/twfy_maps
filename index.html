@@ -29,6 +29,13 @@
         text-anchor: middle;
       }
 
+      .constit-boundary {
+        fill: 'white';
+        stroke: #777;
+        stroke-dasharray: 2,2;
+        stroke-linejoin: round;
+      }
+
     </style>
   </head>
   <body>
@@ -106,11 +113,11 @@
 
       });*/
 
-      d3.json("constits_topo.json", function(error, constits) {
+      d3.json("constits_topo.json", function(error, uk) {
         if (error) {
           return console.error(error);
         }
-        var subunits = topojson.feature(constits, constits.objects.combined);
+        var constits = topojson.feature(uk, uk.objects.combined);
 
         var projection = d3.geo.albers()
           .center([0, 55.4])
@@ -124,9 +131,13 @@
           .pointRadius(2);
 
         svg.append("path")
-          .datum(subunits)
+          .datum(constits)
           .attr("d", path);
 
+        svg.append("path")
+          .datum(topojson.mesh(uk, uk.objects.combined))
+          .attr("d", path)
+          .attr("class", "constit-boundary");
       });
     })();
 
