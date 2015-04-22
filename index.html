@@ -135,7 +135,7 @@
           .attr("d", path);
 
         svg.append("path")
-          .datum(topojson.mesh(uk, uk.objects.combined))
+          .datum(topojson.mesh(uk, uk.objects.combined, function(a, b) { return a !== b;}))
           .attr("d", path)
           .attr("class", "constit-boundary");
       });
