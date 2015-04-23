@@ -1,7 +1,31 @@
-#map {
-    height: 550px;
-    width: 60%;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 50px;
+.subunit.SCT { fill: #ddc; }
+.subunit.WLS { fill: #cdd; }
+.subunit.NIR { fill: #cdc; }
+.subunit.ENG { fill: #dcd; }
+.subunit.IRL { display: none; }
+
+.subunit-boundary {
+fill: none;
+stroke: #777;
+stroke-dasharray: 2,2;
+stroke-linejoin: round;
+}
+
+.subunit-boundary.IRL {
+stroke: #aaa;
+}
+
+.subunit-label {
+fill: #777;
+fill-opacity: .5;
+font-size: 20px;
+font-weight: 300;
+text-anchor: middle;
+}
+
+.constit-boundary {
+fill: 'white';
+stroke: #777;
+stroke-dasharray: 2,2;
+stroke-linejoin: round;
 }
