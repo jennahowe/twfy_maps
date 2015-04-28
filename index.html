@@ -3,12 +3,23 @@
   <head>
     <meta charset="utf-8" />
     <title>twfy</title>
-    <link rel="stylesheet" href="stylesheets/main.css" type="text/css" />
+
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css' rel='stylesheet' />
+    <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-zoomslider/v0.7.0/L.Control.Zoomslider.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-zoomslider/v0.7.0/L.Control.Zoomslider.css' rel='stylesheet' />
+    <!--<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
     <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="js/map.js"></script>
+    <link rel="stylesheet" href="stylesheets/main.css" type="text/css" />
+    <!--<script src="js/node_modules/leaflet-mapbox-vector-tile/dist/Leaflet.MapboxVectorTile.min.js"></script>-->
+    <script src="js/tile_map.js"></script>
+
   </head>
   <body>
+    <div id="map"></div>
   </body>
 </html>
