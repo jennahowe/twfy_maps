@@ -30,8 +30,9 @@ $(function() {
           };
         return style;
       },
-      onClick: function() {
-        $('#info').text("click");
+      onClick: function(click) {
+        $('#info').text(click.feature.id);
+        console.log(click);
       }
     };
      
@@ -45,7 +46,7 @@ $(function() {
         token: 'pk.eyJ1IjoidmlvbGV0dCIsImEiOiI3bjNWeU1NIn0.hqY_yHNXSXOGeEmCGJ7eIQ'
     }).addTo(map);
 
-    //console.log(mvtSource);
+    console.log(mvtSource);
 
 
 
