@@ -1,5 +1,4 @@
 $(function() {
-    
     var map = L.map('map', {
         zoomControl: false
     }).setView([54.7, -3], 6);
@@ -17,25 +16,37 @@ $(function() {
       },
       style: function (feature) {
         var style = {};
-          style.color = 'rgba(44, 15, 36, 1)';
+          style.color = 'rgba(44, 15, 36, 0.05)';
           style.outline = {
-            color: 'rgb(204, 233, 188)',
+            color: 'rgb(127, 42, 68)',
             size: 1
           };
           style.selected = {
-            color: 'rgba(44, 15, 36, 0.7)',
+            color: 'rgba(44, 15, 36, 0.2)',
             outline: {
-              color: 'rgb(205, 173, 228)',
-              size: 2
+              color: 'rgb(44, 15, 36)',
+              size: 2.5 
             }
           };
         return style;
+      },
+      onClick: function() {
+        $('#info').text("click");
       }
     };
      
     var mvtSource = new L.TileLayer.MVTSource(config);
     map.addLayer(mvtSource);
 
-    console.log(mvtSource);
+     L.tileLayer('http://{s}.tiles.mapbox.com/v4/{mapID}/{z}/{x}/{y}.png?access_token={token}', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18,
+        mapID: 'violett.m2bjk7ma',
+        token: 'pk.eyJ1IjoidmlvbGV0dCIsImEiOiI3bjNWeU1NIn0.hqY_yHNXSXOGeEmCGJ7eIQ'
+    }).addTo(map);
+
+    //console.log(mvtSource);
+
+
 
 });
