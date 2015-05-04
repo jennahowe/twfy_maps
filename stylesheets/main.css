@@ -1,22 +1,23 @@
 #map { 
-    height: 770px;
-    width: 60%; 
+    height: 620px;
+    width: 54%; 
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20px;
     border-radius: 5px;
+    display: inline-block;
 }
 
 #info-box {
     height: 350px;
     width: 550px;
     float: right;
-    margin-right: 50px;
     background-color: #7f2a44;
     color: white;
     border-radius: 5px;
     padding: 10px;
+    display: inline-block;
 }
+
 
 .leaflet-control-zoomslider-knob { width:14px; height:6px; }
 .leaflet-container .leaflet-control-zoomslider-body {
