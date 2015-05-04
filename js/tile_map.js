@@ -8,13 +8,13 @@ $(function() {
     // This gets some weird 404s when the request type is json. Not sure why it's 
     // expecting json when it should be expecting x-protobuf. All the ones expecting x-protobuf work fine.
     var config = {
-      url: "http://{s}.tiles.mapbox.com/v4/violett.8d99a6a4/{z}/{x}/{y}.vector.pbf?access_token=sk.eyJ1IjoidmlvbGV0dCIsImEiOiJOaG5rLTFzIn0.ZMgU68F1fNtcTRE8orT3Uw",
+      url: "http://{s}.tiles.mapbox.com/v4/violett.49e091ba/{z}/{x}/{y}.vector.pbf?access_token=sk.eyJ1IjoidmlvbGV0dCIsImEiOiJOaG5rLTFzIn0.ZMgU68F1fNtcTRE8orT3Uw",
       clickableLayers: ["constits"],
       mutexToggle: true,
       getIDForLayerFeature: function(feature) {
-        return feature.properties.name;
+        return feature.properties.id;
       },
-      style: function (feature) {
+      style: function(feature) {
         var style = {};
           style.color = 'rgba(44, 15, 36, 0.05)';
           style.outline = {
@@ -30,9 +30,8 @@ $(function() {
           };
         return style;
       },
-      onClick: function(click) {
-        $('#info').text(click.feature.id);
-        console.log(click);
+      onClick: function(event) {
+        $('#constit-name').text(event.feature.properties.name);
       }
     };
      
@@ -45,9 +44,5 @@ $(function() {
         mapID: 'violett.m2bjk7ma',
         token: 'pk.eyJ1IjoidmlvbGV0dCIsImEiOiI3bjNWeU1NIn0.hqY_yHNXSXOGeEmCGJ7eIQ'
     }).addTo(map);
-
-    console.log(mvtSource);
-
-
 
 });

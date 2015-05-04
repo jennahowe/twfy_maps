@@ -11,15 +11,11 @@ with open('/home/jenna/Documents/twfy/data/WMC.json') as f:
 
 base_url = 'http://mapit.mysociety.org/area/'
 
-def prettify(name):
-    return name.lower().replace(' ', '_').replace(',', '')
-
 for name in constits:
     code = constits[name]
-    name = prettify(name)
 
     url = base_url + code + '.geojson'
-    dest = '/home/jenna/Documents/twfy/data/' + name + '.geojson'
+    dest = '/home/jenna/Documents/twfy/data/constits/individual/' + code + '.geojson'
     print "downloading geometry for: " + name
     urlretrieve(url, dest)
 
