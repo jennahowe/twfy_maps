@@ -25,3 +25,21 @@
      -moz-box-sizing:content-box;
           box-sizing:content-box;
   }
+
+  #date {
+    height: 35px;
+    width: 90px;
+    background-color: #b1cee5;
+    float: right;
+    border-radius: 5px;
+    text-align: center;
+    padding-top: 10px;
+    color: white;
+  }
+  #date:hover {
+    color: gray;
+  }
+
+  #date:visited {
+    color: white;
+  }
