@@ -1,4 +1,13 @@
 $(function() {
+    function getMPs() {
+        var twfy = TWFYAPI.TWFYAPI("DDuejwBGcGSrDBEfmVGZo9Yz");
+        var return_url = function(url) { 
+            console.log("loaded: " + url);
+        };
+        twfy.query("getMPs", {"date": "01/01/2015", "callback": return_url, "output": "js"});
+    }
+    getMPs();
+    
     var map = L.map('map', {
         zoomControl: false
     }).setView([54.7, -3], 6);
@@ -16,12 +25,15 @@ $(function() {
       },
       style: function(feature) {
         var style = {};
-          style.color = 'rgba(44, 15, 36, 0.05)';
-          style.outline = {
+        style.color = function() {
+            var constit = feature.properties.name;
+            return 'rgba(44, 15, 36, 0.1)';
+        };
+        style.outline = {
             color: 'rgb(127, 42, 68)',
             size: 1
           };
-          style.selected = {
+        style.selected = {
             color: 'rgba(44, 15, 36, 0.2)',
             outline: {
               color: 'rgb(44, 15, 36)',
@@ -44,5 +56,9 @@ $(function() {
         mapID: 'violett.m2bjk7ma',
         token: 'pk.eyJ1IjoidmlvbGV0dCIsImEiOiI3bjNWeU1NIn0.hqY_yHNXSXOGeEmCGJ7eIQ'
     }).addTo(map);
+
+
+
+
 
 });

@@ -20,6 +20,7 @@ var TWFYAPI =
 
 	// API key
 	api_key: "",
+	callback: "",
 
 	// Default constructor
 	TWFYAPI: function(api_key)
@@ -34,7 +35,6 @@ var TWFYAPI =
 			throw "ERROR: Invalid API key provided.";
 		}
 		TWFYAPI.api_key = api_key;
-
 		return TWFYAPI;
 	},
 
@@ -50,6 +50,7 @@ var TWFYAPI =
 		// Construct the query
 		var query = new TWFYAPI_Request.TWFYAPI_Request(func, args, TWFYAPI.api_key);
 
+		TWFYAPI.callback = args.callback;
 		// Execute the query
 		if (query.constructor == Object)
 		{
@@ -70,9 +71,11 @@ var TWFYAPI =
 		// Load the data into the page
 		var script = document.createElement("script");
 		script.setAttribute("src", url);
-		document.getElementsByTagName("head")[0].appendChild(script); 
-	}
+		document.getElementsByTagName("head")[0].appendChild(script);
 
+        TWFYAPI.callback(url);
+
+    }
 };
 
 
@@ -164,7 +167,7 @@ var TWFYAPI_Request =
 			"getMPs"            : "Returns list of MPs",
 			"getLord"           : "Returns details for a Lord",
 			"getLords"          : "Returns list of Lords",
-			"getMLA"	    : "Returns details for an MLA",
+			"getMLA"	    	: "Returns details for an MLA",
 			"getMLAs"           : "Returns list of MLAs",
 			"getMSP"            : "Returns details for an MSP",
 			"getMSPs"           : "Returns list of MSPs",
@@ -246,8 +249,9 @@ var TWFYAPI_Request =
 		var param = '';
 		for (param in required_params)
 		{
-			if (!args.hasOwnProperty(param))
+			if (!args.hasOwnProperty(required_params[param]))
 			{
+				console.log(required_params[param]);
 				return false;
 			}
 		}
