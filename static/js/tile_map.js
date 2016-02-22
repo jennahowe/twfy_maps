@@ -16,15 +16,15 @@ $(function() {
       },
       style: function(feature) {
         var style = {};
-          style.color = 'rgba(44, 15, 36, 0.05)';
+          style.color = 'rgba(0, 197, 205, 0.05)';
           style.outline = {
-            color: 'rgb(127, 42, 68)',
+            color: 'rgb(0, 51, 102)',
             size: 1
           };
           style.selected = {
-            color: 'rgba(44, 15, 36, 0.2)',
+            color: 'rgba(0, 197, 205, 0.2)',
             outline: {
-              color: 'rgb(44, 15, 36)',
+              color: 'rgb(0, 197, 205)',
               size: 2.5 
             }
           };

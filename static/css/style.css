@@ -1,23 +1,15 @@
 #map { 
     height: 620px;
-    width: 54%; 
-    margin-left: auto;
-    margin-right: auto;
     border-radius: 5px;
-    display: inline-block;
 }
 
 #info-box {
     height: 350px;
-    width: 550px;
-    float: right;
-    background-color: #7f2a44;
+    background-color: #00C5CD;
     color: white;
     border-radius: 5px;
     padding: 10px;
-    display: inline-block;
 }
-
 
 .leaflet-control-zoomslider-knob { width:14px; height:6px; }
 .leaflet-container .leaflet-control-zoomslider-body {
@@ -25,3 +17,12 @@
      -moz-box-sizing:content-box;
           box-sizing:content-box;
   }
+
+#container {
+  margin: 30px;
+}
+
+#info-box-content {
+  padding: 50px;
+  padding-top: 30px;
+}
