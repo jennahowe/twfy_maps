@@ -54,6 +54,7 @@ coverage.xml
 docs/_build/
 
 # External libraries, geojson files and jekyll thing
-data/*
 _site/*
 leaflet*
+
+venv/
