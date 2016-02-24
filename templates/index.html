@@ -19,7 +19,7 @@
     <script src="{{ url_for('static', filename='lib/Leaflet.MapboxVectorTile.min.js') }}"></script>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css"/>
-    <script src="{{ url_for('static', filename='js/tile_map.js') }}"></script>
+    {#<script src="{{ url_for('static', filename='js/tile_map.js') }}"></script>#}
 
   </head>
   <body>
@@ -29,14 +29,77 @@
           <div id="map"></div>
         </div>
         <div class="col-md-6">
-          <div id="info-box">
-            <div id="info-box-content">
+          <div id="info-box" class="panel panel-default">
+            <div id="info-box-heading" class="panel-heading">
               <h2 id="constit-name">Constituency</h2>
-              <div id="info"><p>{{ constituency_data }}</p></div>
+            </div>
+            <div id="info-box-content" class="panel-body">
+              <div id="constit-info">
+                <p id="party">Party</p>
+                <p id="mp">MP</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <script>
+      $(function() {
+        var map = L.map('map', {
+            zoomControl: false
+        }).setView([54.7, -3], 6);
+
+        L.control.zoomslider().addTo(map);
+
+        var constit_data = {{ constit_data|tojson|safe }};
+        function constitSelectedStyle(feature) {
+          return {
+                 color: 'rgba( 0.2)',
+                 outline: {
+                   color: 'rgb(0, 197, 205)',
+                   size: 2.5 
+                 }
+              };
+        }
+        // This gets some weird 404s when the request type is json. Not sure why it's 
+        // expecting json when it should be expecting x-protobuf. All the ones expecting x-protobuf work fine.
+        var config = {
+          url: "http://{s}.tiles.mapbox.com/v4/violett.49e091ba/{z}/{x}/{y}.vector.pbf?access_token=sk.eyJ1IjoidmlvbGV0dCIsImEiOiJOaG5rLTFzIn0.ZMgU68F1fNtcTRE8orT3Uw",
+          clickableLayers: ["constits"],
+          mutexToggle: true,
+          getIDForLayerFeature: function(feature) {
+            return feature.properties.id;
+          },
+          style: function(feature) {
+            var style = {};
+              style.color = 'rgba(0, 197, 205, 0.05)';
+              style.outline = {
+                color: 'rgb(0, 51, 102)',
+                size: 1
+              };
+              style.selected = constitSelectedStyle(feature);
+            return style;
+          },
+          onClick: function(event) {
+            var constit = event.feature.properties.name;
+            $('#constit-name').text(constit);
+            $('#party').text("Party: " + constit_data[constit]["party"]);
+            $('#mp').text("MP: " + constit_data[constit]["mp_name"]);
+          }
+        };
+         
+        var mvtSource = new L.TileLayer.MVTSource(config);
+        map.addLayer(mvtSource);
+
+        L.tileLayer('http://{s}.tiles.mapbox.com/v4/{mapID}/{z}/{x}/{y}.png?access_token={token}', {
+          attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+          maxZoom: 18,
+          mapID: 'violett.m2bjk7ma',
+          token: 'pk.eyJ1IjoidmlvbGV0dCIsImEiOiI3bjNWeU1NIn0.hqY_yHNXSXOGeEmCGJ7eIQ'
+        }).addTo(map);
+
+      });
+    </script>
   </body>
 </html>
