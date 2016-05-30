@@ -61,24 +61,24 @@
 
           }
           return {
-                //  color: 'rgba(0, 197, 205, 0.2)',
+                 color: partyColour(constit, 'fill'),
                  outline: {
-                   color: partyColour(constit),
+                   color: partyColour(constit, 'border'),
                    size: 2.5
                  }
               };
         }
 
-        var labourRed = 'rgb(213,0,0)',
-            conservativeBlue = 'rgb(0,135,220)',
-            libDemYellow = 'rgb(253,187,48)',
-            snpYellow = 'rgb(255,249,93)',
-            plaidCyrmuGreen = 'rgb(63,132,40)',
-            greenGreen = 'rgb(141,198,63)',
-            ukipPurple = 'rgb(179,0,157)',
-            indiePink = 'rgb(231,103,213)',
-            speakerTeal = 'rgb(17,167,163)',
-            otherGrey = 'rgb(103,136,136)';
+        var labourRed = '213,0,0',
+            conservativeBlue = '0,135,220',
+            libDemYellow = '253,187,48',
+            snpYellow = '255,249,93',
+            plaidCyrmuGreen = '63,132,40',
+            greenGreen = '141,198,63',
+            ukipPurple = '179,0,157',
+            indiePink = '231,103,213',
+            speakerTeal = '17,167,163',
+            otherGrey = '103,136,136';
 
         var partyColours = {
           'Labour': labourRed,
@@ -97,12 +97,26 @@
           'UUP': otherGrey
         }
 
-        function partyColour(feature) {
+        function partyColour(feature, type) {
+          // There's maybe a nicer way of doing this but I'm not sure what it is
           if (!constitData[feature]) {
-            return otherGrey;
+            if (type === 'fill') {
+              return `rgba(${otherGrey},0.4)`;
+            }
+            else if (type === 'border') {
+              return `rgb(${otherGrey})`;
+            }
+          }
+          if (!constitData[feature]) {
+            console.log(feature);
           }
           var party = constitData[feature]['party'];
-          return partyColours[party];
+          if (type === 'fill') {
+            return `rgba(${partyColours[party]},0.4)`;
+          }
+          else if (type === 'border') {
+            return `rgb(${partyColours[party]})`;
+          }
         }
 
         // This gets some weird 404s when the request type is json. Not sure why it's
@@ -117,10 +131,10 @@
           style: function(feature) {
             var style = {};
 
-            style.color = 'rgba(0, 197, 205, 0.05)';
+            style.color = partyColour(feature.properties.name, 'fill');
             style.outline = {
-              color: partyColour(feature.properties.name),
-              size: 1
+              color: partyColour(feature.properties.name, 'border'),
+              size: 0.5
             };
             style.selected = constitSelectedStyle(feature);
             return style;
