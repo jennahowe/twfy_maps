@@ -52,17 +52,60 @@
 
         L.control.zoomslider().addTo(map);
 
-        var constit_data = {{ constit_data|tojson|safe }};
+        var constitData = {{ constit_data|tojson|safe }};
         function constitSelectedStyle(feature) {
+          constit = feature.properties.name;
+          try {
+            constitData[constit]["party"];
+          } catch(e) {
+
+          }
           return {
-                 color: 'rgba( 0.2)',
+                 color: 'rgba(0, 197, 205, 0.2)',
                  outline: {
                    color: 'rgb(0, 197, 205)',
-                   size: 2.5 
+                   size: 2.5
                  }
               };
         }
-        // This gets some weird 404s when the request type is json. Not sure why it's 
+
+        var labourRed = 'rgb(213,0,0)',
+            conservativeBlue = 'rgb(0,135,220)',
+            libDemYellow = 'rgb(253,187,48)',
+            snpYellow = 'rgb(255,249,93)',
+            plaidCyrmuGreen = 'rgb(63,132,40)',
+            greenGreen = 'rgb(141,198,63)',
+            ukipPurple = 'rgb(179,0,157)',
+            indiePink = 'rgb(231,103,213)',
+            speakerTeal = 'rgb(17,167,163)',
+            otherGrey = 'rgb(103,136,136)';
+
+        var partyColours = {
+          'Labour': labourRed,
+          'Labour/Co-operative': labourRed,
+          'Conservative': conservativeBlue,
+          'Liberal Democrat': libDemYellow,
+          'Scottish National Party': snpYellow,
+          'Plaid Cymru': plaidCyrmuGreen,
+          'Green': greenGreen,
+          'UKIP': ukipPurple,
+          'Independent': indiePink,
+          'Speaker': speakerTeal,
+          'Sinn Féin': otherGrey,
+          'DUP': otherGrey,
+          'Social Democratic and Labour Party': otherGrey,
+          'UUP': otherGrey
+        }
+
+        function partyColour(feature) {
+          if (!constitData[feature]) {
+            return otherGrey;
+          }
+          var party = constitData[feature]['party'];
+          return partyColours[party];
+        }
+
+        // This gets some weird 404s when the request type is json. Not sure why it's
         // expecting json when it should be expecting x-protobuf. All the ones expecting x-protobuf work fine.
         var config = {
           url: "http://{s}.tiles.mapbox.com/v4/violett.49e091ba/{z}/{x}/{y}.vector.pbf?access_token=sk.eyJ1IjoidmlvbGV0dCIsImEiOiJOaG5rLTFzIn0.ZMgU68F1fNtcTRE8orT3Uw",
@@ -73,22 +116,31 @@
           },
           style: function(feature) {
             var style = {};
-              style.color = 'rgba(0, 197, 205, 0.05)';
-              style.outline = {
-                color: 'rgb(0, 51, 102)',
-                size: 1
-              };
-              style.selected = constitSelectedStyle(feature);
+
+            style.color = 'rgba(0, 197, 205, 0.05)';
+            style.outline = {
+              color: partyColour(feature.properties.name),
+              size: 1
+            };
+            style.selected = constitSelectedStyle(feature);
             return style;
           },
           onClick: function(event) {
+            var parties = []
             var constit = event.feature.properties.name;
-            $('#constit-name').text(constit);
-            $('#party').text("Party: " + constit_data[constit]["party"]);
-            $('#mp').text("MP: " + constit_data[constit]["mp_name"]);
+
+            if ( !$.inArray(Object.keys(constitData), constit) ) {
+              console.log("This isn't doing what it's supposed to");
+              $('#party').text("This constituency doesn't have an elected MP at the moment");
+              $('#mp').text("");
+            } else {
+              $('#constit-name').text(constit);
+              $('#party').text("Party: " + constitData[constit]["party"]);
+              $('#mp').text("MP: " + constitData[constit]["mp_name"]);
+            }
           }
         };
-         
+
         var mvtSource = new L.TileLayer.MVTSource(config);
         map.addLayer(mvtSource);
 
